@@ -2,7 +2,6 @@ import static org.fest.assertions.Assertions.*;
 
 import org.junit.Test;
 
-
 /**
 *
 * Simple (JUnit) tests that can call all parts of a play app.
@@ -19,9 +18,9 @@ public class ApplicationTest {
 
     @Test
     public void renderTemplate() {
-//        Content html = views.html.index.render("Your new application is ready.");
-//        assertThat(contentType(html)).isEqualTo("text/html");
-//        assertThat(contentAsString(html)).contains("Your new application is ready.");
+//	Content html = views.html.index.render("Your new application is ready.", new Form(SampleForm.class));
+//	assertThat(contentType(html)).isEqualTo("text/html");
+//	assertThat(contentAsString(html)).contains("Your new application is ready.");
     }
 
 

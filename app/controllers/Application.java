@@ -1,9 +1,12 @@
 package controllers;
 
-import static play.data.Form.*;
+import java.util.List;
+
+import models.Message;
 import play.data.Form;
 import play.mvc.Controller;
 import play.mvc.Result;
+import views.html.add;
 import views.html.index;
 
 public class Application extends Controller {
@@ -12,19 +15,19 @@ public class Application extends Controller {
 	public String message;
     }
 
-    public static Result send() {
-	Form<SampleForm> f = form(SampleForm.class).bindFromRequest();
-	if (!f.hasErrors()) {
-	    SampleForm data = f.get();
-	    String msg = "you typed: " + data.message;
-	    return ok(index.render(msg, f));
-	} else {
-	    return badRequest(index.render("ERROR", form(SampleForm.class)));
-	}
+    public static Result index() {
+	List<Message> datas = Message.find.all();
+	return ok(index.render("データベースのサンプル", datas));
     }
 
-    public static Result index() {
-	return ok(index.render("Your new application is ready.", new Form(SampleForm.class)));
+    public static Result add() {
+	Form<Message> f = new Form(Message.class);
+	return ok(add.render("データベースのサンプル", f));
+    }
+
+    public static Result create() {
+	Form<Message> f = new Form(Message.class).bindFromRequest();
+	return redirect("/");
     }
 
 }
