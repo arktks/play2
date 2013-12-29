@@ -1,0 +1,17 @@
+@(msg: String, form1: play.data.Form[models.Message])
+
+@main("Sample Page") {
+
+	<h1>input ID number</h1>
+	<p>@msg</p>
+	@helper.form(action = routes.Application.edit) {
+		@(helper.inputText(
+			field = form1("id")
+		))
+
+		<input type="hidden" value="test" nama="name">
+		<input type="hidden" value="test" nama="message">
+		
+		<input type="submit">
+	}
+}

@@ -7,14 +7,19 @@ import javax.persistence.Id;
 
 import play.db.ebean.Model;
 
+import com.avaje.ebean.annotation.CreatedTimestamp;
+
 @Entity
 public class Message extends Model {
 
     @Id
     public Long id;
+    //@Required
     public String name;
     public String mail;
+    //@Required
     public String message;
+    @CreatedTimestamp
     public Date postdate;
 
     public static Finder<Long, Message> find = new Finder<Long, Message>(Long.class, Message.class);
