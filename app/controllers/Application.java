@@ -10,6 +10,7 @@ import views.html.add;
 import views.html.edit;
 import views.html.index;
 import views.html.item;
+import views.html.delete;
 
 public class Application extends Controller {
 
@@ -68,6 +69,28 @@ public class Application extends Controller {
 	    return redirect("/");
 	} else {
 	    return ok(edit.render("ERROR:再度入力してください", f));
+	}
+    }
+
+    public static Result delete() {
+	Form<Message> f = new Form(Message.class);
+	return ok(delete.render("削除するID", f));
+    }
+
+    public static Result remove() {
+	Form<Message> f = new Form(Message.class).bindFromRequest();
+	if (!f.hasErrors()) {
+	    Message obj = f.get();
+	    Long id = obj.id;
+	    obj = Message.find.byId(id);
+	    if (obj != null) {
+		obj.delete();
+		return redirect("/");
+	    } else {
+		return ok(delete.render("EORROR:そのIDは見つかりません", f));
+	    }
+	} else {
+	    return ok(delete.render("ERROR:入力にエラーが起こりました", f));
 	}
     }
 }
