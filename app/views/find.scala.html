@@ -1,0 +1,19 @@
+@(msg: String, form1: play.data.Form[Application.FindForm], datas: List[Message])
+
+@main("Sample Page") {
+
+	<h1>find data</h1>
+	<p>@msg</p>
+	@helper.form(action = routes.Application.find) {
+		<input type="hidden" value="@form1("id").value" name="id">
+		
+		@(helper.inputText(
+			field = form1("input")
+		))
+		
+		<input type="submit">
+	}
+	
+	<hr>
+	<p>@datas</p>
+}

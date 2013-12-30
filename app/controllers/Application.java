@@ -4,18 +4,25 @@ import java.util.List;
 
 import models.Message;
 import play.data.Form;
+import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.add;
+import views.html.delete;
 import views.html.edit;
+import views.html.find;
 import views.html.index;
 import views.html.item;
-import views.html.delete;
 
 public class Application extends Controller {
 
     public static class SampleForm {
 	public String message;
+    }
+
+    public static class FindForm {
+	@Required
+	public String input;
     }
 
     public static Result index() {
@@ -92,5 +99,17 @@ public class Application extends Controller {
 	} else {
 	    return ok(delete.render("ERROR:入力にエラーが起こりました", f));
 	}
+    }
+
+    public static Result find() {
+	Form<FindForm> f = new Form(FindForm.class).bindFromRequest();
+	List<Message> datas = null;
+	if (!f.hasErrors()) {
+	    String input = f.get().input;
+	    String[] arr = input.split(",");
+	    String q = "name like '%" + input + "%'";
+	    datas = Message.find.where(q).findList();
+	}
+	return ok(find.render("投稿の検索", f, datas));
     }
 }
