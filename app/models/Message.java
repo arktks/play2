@@ -2,8 +2,10 @@ package models;
 
 import java.util.Date;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
 
 import play.data.validation.Constraints.Email;
 import play.data.validation.Constraints.Required;
@@ -32,11 +34,15 @@ public class Message extends Model {
     @CreatedTimestamp
     public Date postdate;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    public Member member;
+
     public static Finder<Long, Message> find = new Finder<Long, Message>(Long.class, Message.class);
 
     @Override
     public String toString() {
-	return ("[id:" + id + ", name:" + name + ", mail:" + mail + " message:" + message + ", date:" + postdate + "]");
+	return ("[id:" + id + ", member:<" + member.name + ", " + member.mail + ">" + ", name:" + name + ", mail:" + mail + " message:" + message
+		+ ", date:" + postdate + "]");
     }
 
     public static class IsUrl extends Validator<String> {
@@ -48,6 +54,10 @@ public class Message extends Model {
 	public F.Tuple<String, Object[]> getErrorMessageKey() {
 	    return new F.Tuple<String, Object[]>("error.invalid", new String[] {});
 	}
+    }
+
+    public static Message findByName(String input) {
+	return Message.find.where().eq("name", input).findList().get(0);
     }
 
 }

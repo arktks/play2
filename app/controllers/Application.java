@@ -2,12 +2,14 @@ package controllers;
 
 import java.util.List;
 
+import models.Member;
 import models.Message;
 import play.data.Form;
 import play.data.validation.Constraints.Required;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.add;
+import views.html.add2;
 import views.html.delete;
 import views.html.edit;
 import views.html.find;
@@ -27,8 +29,11 @@ public class Application extends Controller {
 
     public static Result index() {
 	List<Message> datas = Message.find.all();
-	return ok(index.render("データベースのサンプル", datas));
+	List<Member> datas2 = Member.find.all();
+	return ok(index.render("データベースのサンプル", datas, datas2));
     }
+
+    // Message Action =============================
 
     public static Result add() {
 	Form<Message> f = new Form(Message.class);
@@ -39,10 +44,29 @@ public class Application extends Controller {
 	Form<Message> f = new Form(Message.class).bindFromRequest();
 	if (!f.hasErrors()) {
 	    Message data = f.get();
+	    data.member = Member.findByName(data.name);
 	    data.save();
 	    return redirect("/");
 	} else {
 	    return badRequest(add.render("ERROR", f));
+	}
+    }
+
+    // Member Action =============================
+    
+    public static Result add2() {
+	Form<Member> f = new Form(Member.class);
+	return ok(add2.render("投稿フォーム", f));
+    }
+
+    public static Result create2() {
+	Form<Member> f = new Form(Member.class).bindFromRequest();
+	if (!f.hasErrors()) {
+	    Member data = f.get();
+	    data.save();
+	    return redirect("/");
+	} else {
+	    return badRequest(add2.render("ERROR", f));
 	}
     }
 

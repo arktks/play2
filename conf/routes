@@ -5,7 +5,9 @@
 # Home page
 GET     /                           controllers.Application.index()
 GET     /add                        controllers.Application.add()
+GET     /add2                       controllers.Application.add2()
 POST    /create                     controllers.Application.create()
+GET     /create2                    controllers.Application.create2()
 GET     /item                       controllers.Application.setitem()
 POST    /edit                       controllers.Application.edit()
 POST    /update                     controllers.Application.update()
