@@ -6,9 +6,13 @@
 	<p>@msg</p>
 	<hr>
 	<p>Message Model</p>
-	<pre>@datas</pre>
-		<hr>
+	@for(data <- datas) {
+		@data.id, @data.name, @data.message<br>	
+	}
+	<hr>
 	<p>Member Message</p>
-	<pre>@datas2</pre>
+	@for(data <- datas2) {
+		@data.id, @data.name, @data.tel<br>	
+	}
 
 }
